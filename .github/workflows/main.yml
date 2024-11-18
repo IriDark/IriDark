@@ -8,9 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      issues: write
     name: generate-github-profile-3d-contrib
     steps:
       - uses: actions/checkout@v3
@@ -20,8 +17,9 @@ jobs:
           USERNAME: IriDark
       - name: Commit & Push
         run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "GitHub Actions"
+          git config user.name github-actions
+          git config user.email github-actions[bot]@users.noreply.github.com
           git add -A .
-          git commit -m "generated"
-          git push
+          if git commit -m "generated"; then
+            git push
+          fi
